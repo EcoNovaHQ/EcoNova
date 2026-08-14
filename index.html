@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EcoNova International — Solar Energy Solutions Pakistan</title>
+<meta name="description" content="EcoNova International (SMC-Private) Limited — ISO 9001:2015 certified solar energy solutions in Quetta, Pakistan. Solar panels, hybrid inverters, lithium batteries, water pumps, VFD drives and street lights with official warranties." />
+<meta name="theme-color" content="#14532d" />
+<meta property="og:title" content="EcoNova International — Solar Energy Solutions Pakistan" />
+<meta property="og:description" content="Premium solar panels, inverters, batteries and complete solar systems backed by official warranties. ISO 9001:2015 certified • SECP & FBR registered." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23a3e635'/%3E%3Ctext x='16' y='23' font-size='20' font-family='Arial,sans-serif' font-weight='bold' text-anchor='middle' fill='%2314532d'%3EE%3C/text%3E%3C/svg%3E" />
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+<script src="https://unpkg.com/lucide@0.544.0/dist/umd/lucide.min.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background:#030712; }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background:#111827; }
+  ::-webkit-scrollbar-thumb { background:#365314; border-radius:8px; }
+  ::-webkit-scrollbar-thumb:hover { background:#4d7c0f; }
+  #boot { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:#030712; color:#a3e635; font-family:system-ui,sans-serif; font-weight:700; letter-spacing:.1em; }
+</style>
+</head>
+<body class="bg-gray-950">
+<div id="boot">LOADING ECONOVA…</div>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useMemo } = React;
+
+// ── LUCIDE ICON BRIDGE ──────────────────────────────────────────────────────
+const LI = (window.lucide && window.lucide.icons) || {};
+function makeIcon(name) {
+  const node = LI[name] || [];
+  return function LucideIcon({ size = 24, className = "", strokeWidth = 2, fill = "none", ...rest }) {
+    return React.createElement(
+      "svg",
+      {
+        xmlns: "http://www.w3.org/2000/svg", width: size, height: size,
+        viewBox: "0 0 24 24", fill: fill, stroke: "currentColor",
+        strokeWidth: strokeWidth, strokeLinecap: "round", strokeLinejoin: "round",
+        className: "lucide " + className, ...rest
+      },
+      node.map(([tag, attrs], i) => React.createElement(tag, { key: i, ...attrs }))
+    );
+  };
+}
+const ShoppingCart = makeIcon("ShoppingCart");
+const X = makeIcon("X");
+const Plus = makeIcon("Plus");
+const Minus = makeIcon("Minus");
+const Phone = makeIcon("Phone");
+const MapPin = makeIcon("MapPin");
+const Shield = makeIcon("Shield");
+const Award = makeIcon("Award");
+const Zap = makeIcon("Zap");
+const Star = makeIcon("Star");
+const Check = makeIcon("Check");
+const MessageCircle = makeIcon("MessageCircle");
+const Search = makeIcon("Search");
+const Menu = makeIcon("Menu");
+const Package = makeIcon("Package");
+
+// ── PRODUCTS ────────────────────────────────────────────────────────────────
+const CATS = [
+  { id: "all", label: "All Products", icon: "🌟" },
+  { id: "solar-panels", label: "Solar Panels", icon: "☀️" },
+  { id: "inverters", label: "Inverters", icon: "⚡" },
+  { id: "batteries", label: "Batteries", icon: "🔋" },
+  { id: "cables", label: "Cables", icon: "🔌" },
+  { id: "pumps", label: "Water Pumps", icon: "💧" },
+  { id: "vfd", label: "VFD Drives", icon: "🏭" },
+  { id: "street-lights", label: "Street Lights", icon: "💡" },
+];
+
+const PRODUCTS = [
+  // Solar Panels
+  { id:1, cat:"solar-panels", name:"Solar Panel A Grade 600W", price:24500, badge:"A Grade", warranty:"10 Years", hot:true,
+    desc:"High-efficiency monocrystalline solar panel, ideal for residential and commercial installations.",
+    specs:["600W Peak Power","A Grade Certified","Mono PERC Technology","Weatherproof Aluminium Frame","10-Year Product Warranty"],
+    emoji:"☀️", bg:"from-yellow-700 to-green-800" },
+  { id:2, cat:"solar-panels", name:"Solar Panel A+ Grade 700W", price:29000, badge:"A+ Grade", warranty:"10 Years", hot:false,
+    desc:"Superior A+ grade panel with enhanced efficiency for maximum energy generation.",
+    specs:["700W Peak Power","A+ Grade Certified","Premium Efficiency","IP67 Rated","10-Year Product Warranty"],
+    emoji:"☀️", bg:"from-yellow-600 to-green-700" },
+  { id:3, cat:"solar-panels", name:"Solar Panel A1 Grade 750W", price:34000, badge:"A1 Grade", warranty:"10 Years", hot:false,
+    desc:"Top-tier A1 grade – the pinnacle of solar technology for demanding applications.",
+    specs:["750W Peak Power","A1 Grade – Best Quality","Ultra-High Efficiency","25-Year Performance Warranty","Anti-PID Technology"],
+    emoji:"☀️", bg:"from-amber-600 to-green-800" },
+  // Inverters
+  { id:4, cat:"inverters", name:"Hybrid Inverter IP-21 3kW", price:55000, badge:"5 Yr Warranty", warranty:"5 Years", hot:true,
+    desc:"IP-21 Series hybrid inverter supporting off-grid, WAPDA sharing and grid feeding modes.",
+    specs:["3kW Capacity","IP-21 Series","Off-Grid & Grid-Tie","LCD Display","5-Year Official Warranty"],
+    emoji:"⚡", bg:"from-green-800 to-teal-700" },
+  { id:5, cat:"inverters", name:"Hybrid Inverter IP-21 5kW", price:75000, badge:"5 Yr Warranty", warranty:"5 Years", hot:false,
+    desc:"5kW hybrid inverter with WAPDA sharing & grid feeding capability for homes and offices.",
+    specs:["5kW Capacity","WAPDA Sharing","Grid Feeding","Pure Sine Wave","5-Year Official Warranty"],
+    emoji:"⚡", bg:"from-green-800 to-teal-700" },
+  { id:6, cat:"inverters", name:"Hybrid Inverter IP-21 10kW", price:115000, badge:"5 Yr Warranty", warranty:"5 Years", hot:false,
+    desc:"10kW hybrid inverter for larger homes and small commercial setups.",
+    specs:["10kW Capacity","IP-21 Series","WAPDA Sharing","Smart Monitoring","5-Year Official Warranty"],
+    emoji:"⚡", bg:"from-green-900 to-teal-700" },
+  { id:7, cat:"inverters", name:"On-Grid Inverter NBP 10kW", price:120000, badge:"5 Yr Warranty", warranty:"5 Years", hot:true,
+    desc:"Nano Banana Pro Series on-grid & hybrid inverter with IP-65-66 weatherproof rating.",
+    specs:["10kW Capacity","IP-65-66 Rated","On-Grid & Hybrid","Low & High Voltage","5-Year Official Warranty"],
+    emoji:"⚡", bg:"from-green-800 to-emerald-700" },
+  { id:8, cat:"inverters", name:"Commercial Inverter NBP 50kW", price:450000, badge:"5 Yr Warranty", warranty:"5 Years", hot:false,
+    desc:"High-capacity commercial on-grid inverter for large-scale solar installations.",
+    specs:["50kW Capacity","IP-65-66 Rated","3-Phase Output","Nano Banana Pro Series","5-Year Official Warranty"],
+    emoji:"⚡", bg:"from-green-900 to-emerald-800" },
+  { id:9, cat:"inverters", name:"Commercial Inverter NBP 150kW", price:1200000, badge:"5 Yr Warranty", warranty:"5 Years", hot:false,
+    desc:"Industrial-grade 150kW inverter for large commercial and industrial solar plants.",
+    specs:["150kW Capacity","IP-65-66 Rated","Industrial Grade","Remote Monitoring","5-Year Official Warranty"],
+    emoji:"⚡", bg:"from-green-900 to-emerald-800" },
+  // Batteries
+  { id:10, cat:"batteries", name:"Lithium Battery 12V 100Ah", price:35000, badge:"5 Yr Warranty", warranty:"5 Years", hot:false,
+    desc:"Nano Banana Pro LiFePO4 battery – compact and reliable for small systems.",
+    specs:["12V 100Ah","LiFePO4 Chemistry","Built-in BMS","2000+ Cycle Life","5-Year Official Warranty"],
+    emoji:"🔋", bg:"from-green-700 to-lime-700" },
+  { id:11, cat:"batteries", name:"Lithium Battery 48V 100Ah", price:85000, badge:"5 Yr Warranty", warranty:"5 Years", hot:true,
+    desc:"Nano Banana Pro 48V lithium battery with advanced BMS and long cycle life.",
+    specs:["48V 100Ah","LiFePO4 Chemistry","Smart BMS","Stackable Design","5-Year Official Warranty"],
+    emoji:"🔋", bg:"from-green-700 to-lime-700" },
+  { id:12, cat:"batteries", name:"Lithium Battery 48V 280Ah", price:195000, badge:"5 Yr Warranty", warranty:"5 Years", hot:false,
+    desc:"High-capacity Nano Banana Pro lithium battery for extended backup.",
+    specs:["48V 280Ah","LiFePO4 Chemistry","Advanced BMS","Long Cycle Life","5-Year Official Warranty"],
+    emoji:"🔋", bg:"from-green-700 to-lime-600" },
+  { id:13, cat:"batteries", name:"Lithium Battery 48V 320Ah", price:225000, badge:"5 Yr Warranty", warranty:"5 Years", hot:false,
+    desc:"Maximum-capacity Nano Banana Pro battery for heavy-duty residential and commercial use.",
+    specs:["48V 320Ah","LiFePO4 Chemistry","Premium BMS","Modular System","5-Year Official Warranty"],
+    emoji:"🔋", bg:"from-green-800 to-lime-600" },
+  // Cables
+  { id:14, cat:"cables", name:"Nano Banana Pro Cable 3mm (100m)", price:7500, badge:"5 Yr Warranty", warranty:"5 Years", hot:false,
+    desc:"Premium flexible copper solar DC cable, UV-resistant and durable.",
+    specs:["3mm² Section","Pure Copper Core","UV Resistant Jacket","DC 1500V Rated","5-Year Official Warranty"],
+    emoji:"🔌", bg:"from-green-600 to-emerald-600" },
+  { id:15, cat:"cables", name:"Nano Banana Pro Cable 5mm (100m)", price:11000, badge:"5 Yr Warranty", warranty:"5 Years", hot:true,
+    desc:"Heavy-duty 5mm solar cable for high-current DC string connections.",
+    specs:["5mm² Section","Tinned Copper","Heat & UV Resistant","DC 1500V Rated","5-Year Official Warranty"],
+    emoji:"🔌", bg:"from-green-600 to-emerald-600" },
+  { id:16, cat:"cables", name:"Nano Banana Pro Cable 10mm (50m)", price:14000, badge:"5 Yr Warranty", warranty:"5 Years", hot:false,
+    desc:"Large gauge solar cable for main DC trunk lines and battery connections.",
+    specs:["10mm² Section","Tinned Copper","Double Insulated","DC 1500V Rated","5-Year Official Warranty"],
+    emoji:"🔌", bg:"from-green-600 to-emerald-600" },
+  // Pumps
+  { id:17, cat:"pumps", name:"Solar Submersible Pump 1HP", price:35000, badge:"1 Yr Warranty", warranty:"1 Year", hot:false,
+    desc:"Energy-efficient solar submersible pump for irrigation and domestic water supply.",
+    specs:["1HP Motor","Solar Direct Drive","Stainless Steel Body","Deep Well Compatible","1-Year Official Warranty"],
+    emoji:"💧", bg:"from-blue-800 to-green-700" },
+  { id:18, cat:"pumps", name:"Solar Submersible Pump 3HP", price:75000, badge:"1 Yr Warranty", warranty:"1 Year", hot:true,
+    desc:"High-flow solar submersible pump for agriculture and commercial water supply.",
+    specs:["3HP Motor","Solar Direct Drive","MPPT Controller Included","High Flow Rate","1-Year Official Warranty"],
+    emoji:"💧", bg:"from-blue-800 to-green-700" },
+  { id:19, cat:"pumps", name:"Solar Surface Pump 2HP", price:45000, badge:"1 Yr Warranty", warranty:"1 Year", hot:false,
+    desc:"Robust surface pump suitable for drip irrigation and water storage systems.",
+    specs:["2HP Motor","Surface Mount","Corrosion Resistant","Easy Installation","1-Year Official Warranty"],
+    emoji:"💧", bg:"from-blue-700 to-green-600" },
+  // VFD
+  { id:20, cat:"vfd", name:"VFD Drive 2.2kW", price:18000, badge:"1 Yr Warranty", warranty:"1 Year", hot:false,
+    desc:"Variable frequency drive for precise motor speed control in industrial applications.",
+    specs:["2.2kW Rating","3-Phase Output","Built-in PID","RS485 Communication","1-Year Official Warranty"],
+    emoji:"🏭", bg:"from-teal-800 to-green-700" },
+  { id:21, cat:"vfd", name:"VFD Drive 15kW", price:85000, badge:"1 Yr Warranty", warranty:"1 Year", hot:true,
+    desc:"Industrial-grade VFD for pumps, fans, and compressors.",
+    specs:["15kW Rating","3-Phase I/O","Advanced Vector Control","Programmable I/O","1-Year Official Warranty"],
+    emoji:"🏭", bg:"from-teal-800 to-green-700" },
+  { id:22, cat:"vfd", name:"VFD Drive 75kW", price:320000, badge:"1 Yr Warranty", warranty:"1 Year", hot:false,
+    desc:"Heavy-duty VFD for large industrial motors and manufacturing equipment.",
+    specs:["75kW Rating","Heavy Industrial","Dynamic Braking","Harmonic Filter","1-Year Official Warranty"],
+    emoji:"🏭", bg:"from-teal-900 to-green-800" },
+  // Street Lights
+  { id:23, cat:"street-lights", name:"Solar Street Light 30W", price:22000, badge:"2 Yr Warranty", warranty:"2 Years", hot:false,
+    desc:"All-in-one solar street light with integrated battery and intelligent control.",
+    specs:["30W LED","All-in-One Design","Auto On/Off","Motion Sensor","2-Year Official Warranty"],
+    emoji:"💡", bg:"from-yellow-700 to-green-700" },
+  { id:24, cat:"street-lights", name:"Solar Street Light 60W", price:38000, badge:"2 Yr Warranty", warranty:"2 Years", hot:true,
+    desc:"High-lumen solar street light ideal for roads, parking lots, and public spaces.",
+    specs:["60W LED","High Luminosity","IP65 Waterproof","Remote Control","2-Year Official Warranty"],
+    emoji:"💡", bg:"from-yellow-700 to-green-700" },
+  { id:25, cat:"street-lights", name:"Solar Street Light 120W", price:65000, badge:"2 Yr Warranty", warranty:"2 Years", hot:false,
+    desc:"Commercial-grade solar street light for highways and large open areas.",
+    specs:["120W LED","Ultra Bright","IP66 Waterproof","MPPT Charging","2-Year Official Warranty"],
+    emoji:"💡", bg:"from-yellow-800 to-green-800" },
+];
+
+const fmt = (n) => `PKR ${n.toLocaleString()}`;
+
+// ── COMPONENTS ──────────────────────────────────────────────────────────────
+
+function Logo() {
+  return (
+    <div className="flex items-center gap-2">
+      <div className="w-10 h-10 rounded-full bg-lime-400 flex items-center justify-center shadow-lg">
+        <span className="text-green-900 font-black text-lg">E</span>
+      </div>
+      <div>
+        <div className="text-white font-black text-xl tracking-wide leading-none">
+          EC<span className="text-lime-400">☀</span>NOVA
+        </div>
+        <div className="text-lime-400 text-xs tracking-widest font-semibold">INTERNATIONAL</div>
+      </div>
+    </div>
+  );
+}
+
+function WhatsAppBtn() {
+  return (
+    <a href="https://wa.me/923098773221" target="_blank" rel="noreferrer"
+      aria-label="Chat on WhatsApp"
+      className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-green-500 hover:bg-green-400 flex items-center justify-center shadow-2xl transition-all">
+      <MessageCircle size={28} className="text-white" />
+    </a>
+  );
+}
+
+function StarRating() {
+  return <div className="flex gap-0.5">{[...Array(5)].map((_,i)=><Star key={i} size={12} className="text-yellow-400 fill-yellow-400"/>)}</div>;
+}
+
+// ── PRODUCT CARD ─────────────────────────────────────────────────────────────
+function ProductCard({ p, onView, onAdd }) {
+  return (
+    <div className="bg-gray-900 rounded-2xl overflow-hidden flex flex-col border border-gray-800 hover:border-lime-500 transition-all group">
+      {/* Image area */}
+      <div className={`bg-gradient-to-br ${p.bg} h-40 flex flex-col items-center justify-center relative`}>
+        <span className="text-6xl">{p.emoji}</span>
+        {p.hot && (
+          <span className="absolute top-3 left-3 bg-lime-400 text-green-900 text-xs font-bold px-2 py-0.5 rounded-full">🔥 HOT</span>
+        )}
+        <span className="absolute top-3 right-3 bg-black bg-opacity-50 text-lime-300 text-xs font-semibold px-2 py-0.5 rounded-full">{p.badge}</span>
+      </div>
+      <div className="p-4 flex flex-col flex-1 gap-2">
+        <div className="text-xs text-lime-400 font-semibold uppercase tracking-wide">{CATS.find(c=>c.id===p.cat)?.label}</div>
+        <h3 className="text-white font-bold text-sm leading-tight">{p.name}</h3>
+        <StarRating />
+        <p className="text-gray-400 text-xs line-clamp-2 flex-1">{p.desc}</p>
+        <div className="flex items-center justify-between mt-2">
+          <div>
+            <div className="text-lime-400 font-black text-lg">{fmt(p.price)}</div>
+            <div className="text-gray-500 text-xs">Warranty: {p.warranty}</div>
+          </div>
+        </div>
+        <div className="flex gap-2 mt-1">
+          <button onClick={()=>onView(p)}
+            className="flex-1 border border-lime-500 text-lime-400 text-xs py-2 rounded-lg hover:bg-lime-500 hover:text-green-900 transition-all font-semibold">
+            Details
+          </button>
+          <button onClick={()=>onAdd(p)}
+            className="flex-1 bg-lime-400 text-green-900 text-xs py-2 rounded-lg hover:bg-lime-300 transition-all font-bold">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── PRODUCT MODAL ─────────────────────────────────────────────────────────────
+function ProductModal({ p, onClose, onAdd }) {
+  if (!p) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4">
+      <div className="bg-gray-900 rounded-2xl max-w-lg w-full border border-gray-700 overflow-hidden">
+        <div className={`bg-gradient-to-br ${p.bg} h-48 flex items-center justify-center relative`}>
+          <span className="text-8xl">{p.emoji}</span>
+          <button onClick={onClose} className="absolute top-3 right-3 w-8 h-8 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-80">
+            <X size={16}/>
+          </button>
+        </div>
+        <div className="p-6">
+          <div className="text-lime-400 text-xs font-semibold uppercase mb-1">{CATS.find(c=>c.id===p.cat)?.label}</div>
+          <h2 className="text-white font-black text-xl mb-2">{p.name}</h2>
+          <StarRating />
+          <p className="text-gray-300 text-sm mt-3 mb-4">{p.desc}</p>
+          <div className="bg-gray-800 rounded-xl p-4 mb-4">
+            <div className="text-lime-400 font-bold text-sm mb-2">Specifications</div>
+            <ul className="space-y-1">
+              {p.specs.map((s,i)=>(
+                <li key={i} className="flex items-center gap-2 text-gray-300 text-xs">
+                  <Check size={12} className="text-lime-400 flex-shrink-0"/> {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-lime-400 font-black text-2xl">{fmt(p.price)}</div>
+              <div className="text-gray-500 text-xs">Official Warranty: {p.warranty}</div>
+            </div>
+            <button onClick={()=>{onAdd(p);onClose();}}
+              className="bg-lime-400 text-green-900 font-bold px-6 py-3 rounded-xl hover:bg-lime-300 transition-all flex items-center gap-2">
+              <ShoppingCart size={16}/> Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── CART DRAWER ────────────────────────────────────────────────────────────
+function CartDrawer({ cart, onClose, onUpdate, onCheckout }) {
+  const total = cart.reduce((s,i)=>s+i.price*i.qty, 0);
+  return (
+    <div className="fixed inset-0 z-50 flex justify-end">
+      <div className="flex-1 bg-black bg-opacity-60" onClick={onClose}/>
+      <div className="w-full max-w-sm bg-gray-900 flex flex-col h-full shadow-2xl">
+        <div className="flex items-center justify-between p-5 border-b border-gray-800">
+          <h2 className="text-white font-bold text-lg flex items-center gap-2"><ShoppingCart size={20} className="text-lime-400"/> Shopping Cart</h2>
+          <button onClick={onClose} className="text-gray-400 hover:text-white"><X size={20}/></button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          {cart.length===0 && (
+            <div className="text-center text-gray-500 mt-16">
+              <ShoppingCart size={48} className="mx-auto mb-4 text-gray-700"/>
+              <p>Your cart is empty</p>
+            </div>
+          )}
+          {cart.map(item=>(
+            <div key={item.id} className="bg-gray-800 rounded-xl p-3 flex gap-3">
+              <div className={`w-14 h-14 rounded-lg bg-gradient-to-br ${item.bg} flex items-center justify-center flex-shrink-0 text-2xl`}>
+                {item.emoji}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-white text-xs font-semibold leading-tight truncate">{item.name}</p>
+                <p className="text-lime-400 text-sm font-bold mt-1">{fmt(item.price)}</p>
+                <div className="flex items-center gap-2 mt-2">
+                  <button onClick={()=>onUpdate(item.id,-1)} className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600"><Minus size={12}/></button>
+                  <span className="text-white text-sm font-bold w-6 text-center">{item.qty}</span>
+                  <button onClick={()=>onUpdate(item.id,1)} className="w-6 h-6 rounded-full bg-lime-500 flex items-center justify-center text-green-900 hover:bg-lime-400"><Plus size={12}/></button>
+                  <button onClick={()=>onUpdate(item.id,-(item.qty))} className="ml-auto text-gray-500 hover:text-red-400"><X size={14}/></button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {cart.length>0 && (
+          <div className="p-4 border-t border-gray-800">
+            <div className="flex justify-between text-white mb-4">
+              <span className="font-semibold">Total:</span>
+              <span className="font-black text-lime-400 text-xl">{fmt(total)}</span>
+            </div>
+            <button onClick={onCheckout}
+              className="w-full bg-lime-400 text-green-900 font-bold py-3 rounded-xl hover:bg-lime-300 transition-all">
+              Proceed to Checkout
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── CHECKOUT MODAL ─────────────────────────────────────────────────────────
+function CheckoutModal({ cart, onClose, onConfirm }) {
+  const [form, setForm] = useState({ name:"", phone:"", address:"", payMethod:"ubl", notes:"" });
+  const [done, setDone] = useState(false);
+  const [err, setErr] = useState("");
+  const total = cart.reduce((s,i)=>s+i.price*i.qty, 0);
+  const orderLines = cart.map(i=>`• ${i.name} ×${i.qty} — ${fmt(i.price*i.qty)}`).join("\n");
+  const set = (k,v) => setForm(f=>({...f,[k]:v}));
+
+  const waText = encodeURIComponent(
+    `New Order — EcoNova International\n\nName: ${form.name}\nPhone: ${form.phone}\nAddress: ${form.address || "-"}\nPayment: ${form.payMethod === "ubl" ? "UBL Bank Transfer" : "EasyPaisa"}\nNotes: ${form.notes || "-"}\n\nItems:\n${orderLines}\n\nTotal: ${fmt(total)}`
+  );
+
+  const submit = () => {
+    if (!form.name || !form.phone) { setErr("Please fill in your name and phone number."); return; }
+    setErr("");
+    setDone(true);
+    onConfirm();
+  };
+
+  if (done) return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4">
+      <div className="bg-gray-900 rounded-2xl max-w-md w-full p-8 text-center border border-lime-500">
+        <div className="w-20 h-20 bg-lime-400 rounded-full flex items-center justify-center mx-auto mb-4">
+          <Check size={40} className="text-green-900"/>
+        </div>
+        <h2 className="text-white font-black text-2xl mb-2">Order Placed!</h2>
+        <p className="text-gray-300 mb-4">Thank you <strong className="text-lime-400">{form.name}</strong>! Your order has been received.</p>
+        <div className="bg-gray-800 rounded-xl p-4 text-left mb-4">
+          <p className="text-lime-400 font-bold text-sm mb-2">Next Steps:</p>
+          <p className="text-gray-300 text-xs">1. Send your order to us on WhatsApp using the button below.</p>
+          <p className="text-gray-300 text-xs mt-1">2. Complete payment via your selected method.</p>
+          <p className="text-gray-300 text-xs mt-1">3. Send payment screenshot to WhatsApp: <strong className="text-white">0309-8773221</strong></p>
+          <p className="text-gray-300 text-xs mt-1">4. Our team will confirm and arrange delivery.</p>
+        </div>
+        <a href={`https://wa.me/923098773221?text=${waText}`} target="_blank" rel="noreferrer"
+          className="w-full bg-green-500 text-white font-bold px-8 py-3 rounded-xl hover:bg-green-400 flex items-center justify-center gap-2 mb-3">
+          <MessageCircle size={18}/> Send Order on WhatsApp
+        </a>
+        <button onClick={onClose} className="bg-lime-400 text-green-900 font-bold px-8 py-3 rounded-xl hover:bg-lime-300 w-full">Done</button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-3 overflow-y-auto">
+      <div className="bg-gray-900 rounded-2xl max-w-lg w-full border border-gray-700 my-4">
+        <div className="flex items-center justify-between p-5 border-b border-gray-800">
+          <h2 className="text-white font-black text-xl">Checkout</h2>
+          <button onClick={onClose} className="text-gray-400 hover:text-white"><X size={20}/></button>
+        </div>
+        <div className="p-5 space-y-4 max-h-screen overflow-y-auto">
+          {/* Order Summary */}
+          <div className="bg-gray-800 rounded-xl p-4">
+            <p className="text-lime-400 font-bold text-sm mb-2">Order Summary</p>
+            {cart.map(i=>(
+              <div key={i.id} className="flex justify-between text-xs text-gray-300 py-1">
+                <span>{i.name} ×{i.qty}</span>
+                <span>{fmt(i.price*i.qty)}</span>
+              </div>
+            ))}
+            <div className="border-t border-gray-700 mt-2 pt-2 flex justify-between text-white font-black">
+              <span>Total</span><span className="text-lime-400">{fmt(total)}</span>
+            </div>
+          </div>
+          {/* Customer Info */}
+          <div className="space-y-3">
+            <p className="text-white font-bold text-sm">Your Information</p>
+            <input value={form.name} onChange={e=>set("name",e.target.value)} placeholder="Full Name *"
+              className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-lime-500"/>
+            <input value={form.phone} onChange={e=>set("phone",e.target.value)} placeholder="Phone Number *"
+              className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-lime-500"/>
+            <input value={form.address} onChange={e=>set("address",e.target.value)} placeholder="Delivery Address"
+              className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-lime-500"/>
+            <textarea value={form.notes} onChange={e=>set("notes",e.target.value)} placeholder="Additional Notes (optional)" rows={2}
+              className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-lime-500 resize-none"/>
+          </div>
+          {/* Payment Method */}
+          <div className="space-y-3">
+            <p className="text-white font-bold text-sm">Payment Method</p>
+            <div className="grid grid-cols-2 gap-3">
+              {[{k:"ubl",label:"UBL Bank Transfer"},{k:"easypaisa",label:"EasyPaisa"}].map(m=>(
+                <button key={m.k} onClick={()=>set("payMethod",m.k)}
+                  className={`p-3 rounded-xl border text-xs font-semibold transition-all ${form.payMethod===m.k?"border-lime-400 bg-lime-400 bg-opacity-10 text-lime-400":"border-gray-700 text-gray-400 hover:border-gray-500"}`}>
+                  {m.label}
+                </button>
+              ))}
+            </div>
+            {/* Payment Details Box */}
+            <div className="bg-gray-800 rounded-xl p-4">
+              {form.payMethod==="ubl" ? (
+                <>
+                  <p className="text-lime-400 font-bold text-sm mb-2">🏦 UBL Bank Account</p>
+                  <p className="text-gray-300 text-xs">Account Title: <strong className="text-white">Atta Ullah</strong></p>
+                  <p className="text-gray-300 text-xs mt-1">Account Number: <strong className="text-white">0476257299439</strong></p>
+                  <p className="text-gray-400 text-xs mt-2">After transfer, send screenshot to WhatsApp: <strong className="text-white">0309-8773221</strong></p>
+                </>
+              ) : (
+                <>
+                  <p className="text-lime-400 font-bold text-sm mb-2">📱 EasyPaisa</p>
+                  <p className="text-gray-300 text-xs">Account Name: <strong className="text-white">Attaullah</strong></p>
+                  <p className="text-gray-300 text-xs mt-1">Mobile Number: <strong className="text-white">0309-8773221</strong></p>
+                  <p className="text-gray-400 text-xs mt-2">After payment, send screenshot to WhatsApp: <strong className="text-white">0309-8773221</strong></p>
+                </>
+              )}
+            </div>
+          </div>
+          {err && <p className="text-red-400 text-xs font-semibold">{err}</p>}
+          <button onClick={submit}
+            className="w-full bg-lime-400 text-green-900 font-black py-4 rounded-xl hover:bg-lime-300 transition-all text-base">
+            Confirm Order
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── MAIN APP ──────────────────────────────────────────────────────────────────
+function App() {
+  const [page, setPage] = useState("home");
+  const [cart, setCart] = useState([]);
+  const [catFilter, setCatFilter] = useState("all");
+  const [search, setSearch] = useState("");
+  const [showCart, setShowCart] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [viewProd, setViewProd] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const cartCount = cart.reduce((s,i)=>s+i.qty,0);
+
+  const go = (p) => { setPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); };
+
+  const addToCart = (p) => {
+    setCart(c => {
+      const ex = c.find(i=>i.id===p.id);
+      if (ex) return c.map(i=>i.id===p.id?{...i,qty:i.qty+1}:i);
+      return [...c, {...p, qty:1}];
+    });
+  };
+
+  const updateCart = (id, delta) => {
+    setCart(c => c.map(i=>i.id===id?{...i,qty:Math.max(0,i.qty+delta)}:i).filter(i=>i.qty>0));
+  };
+
+  const filtered = useMemo(()=>{
+    return PRODUCTS.filter(p=>{
+      const matchCat = catFilter==="all" || p.cat===catFilter;
+      const matchQ = search==="" || p.name.toLowerCase().includes(search.toLowerCase());
+      return matchCat && matchQ;
+    });
+  }, [catFilter, search]);
+
+  const bubbles = useMemo(()=> [...Array(20)].map(()=>({
+    w: Math.random()*200+50, h: Math.random()*200+50,
+    top: Math.random()*100, left: Math.random()*100
+  })), []);
+
+  const navLinks = [
+    {id:"home",label:"Home"},
+    {id:"products",label:"Products"},
+    {id:"about",label:"About Us"},
+    {id:"contact",label:"Contact"},
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-950 text-white font-sans">
+      {/* NAVBAR */}
+      <nav className="bg-green-900 sticky top-0 z-40 shadow-xl">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+          <button onClick={()=>go("home")}><Logo/></button>
+          <div className="hidden md:flex items-center gap-6">
+            {navLinks.map(n=>(
+              <button key={n.id} onClick={()=>go(n.id)}
+                className={`text-sm font-semibold transition-all ${page===n.id?"text-lime-400":"text-green-100 hover:text-lime-300"}`}>
+                {n.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-3">
+            <button onClick={()=>setShowCart(true)} aria-label="Open cart" className="relative p-2 text-green-100 hover:text-lime-400 transition-colors">
+              <ShoppingCart size={22}/>
+              {cartCount>0 && <span className="absolute -top-1 -right-1 bg-lime-400 text-green-900 text-xs font-black w-5 h-5 rounded-full flex items-center justify-center">{cartCount}</span>}
+            </button>
+            <button className="md:hidden text-green-100 p-2" aria-label="Menu" onClick={()=>setMenuOpen(!menuOpen)}><Menu size={22}/></button>
+          </div>
+        </div>
+        {menuOpen && (
+          <div className="md:hidden bg-green-950 px-4 pb-4 space-y-2">
+            {navLinks.map(n=>(
+              <button key={n.id} onClick={()=>{go(n.id);setMenuOpen(false);}}
+                className={`block w-full text-left py-2 text-sm font-semibold ${page===n.id?"text-lime-400":"text-green-100"}`}>
+                {n.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </nav>
+
+      {/* ── HOME PAGE ────────────────────────────────────────────────────────── */}
+      {page==="home" && (
+        <div>
+          {/* Hero */}
+          <div className="bg-gradient-to-br from-green-900 via-green-800 to-gray-900 relative overflow-hidden">
+            <div className="absolute inset-0 opacity-10">
+              {bubbles.map((b,i)=>(
+                <div key={i} className="absolute rounded-full bg-lime-400" style={{width:b.w,height:b.h,top:`${b.top}%`,left:`${b.left}%`,opacity:0.3}}/>
+              ))}
+            </div>
+            <div className="max-w-7xl mx-auto px-4 py-20 relative">
+              <div className="max-w-2xl">
+                <div className="inline-flex items-center gap-2 bg-lime-400 bg-opacity-20 border border-lime-400 text-lime-400 text-xs font-bold px-4 py-2 rounded-full mb-6">
+                  <Shield size={14}/> ISO 9001:2015 Certified • SECP &amp; FBR Registered
+                </div>
+                <h1 className="text-4xl sm:text-5xl font-black leading-tight mb-4">
+                  Power Your Future with <span className="text-lime-400">Solar Energy</span>
+                </h1>
+                <p className="text-green-100 text-lg mb-8 leading-relaxed">
+                  Pakistan's trusted solar energy solutions provider. Premium panels, inverters, batteries, and complete solar systems backed by official warranties.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <button onClick={()=>go("products")}
+                    className="bg-lime-400 text-green-900 font-black px-8 py-4 rounded-xl hover:bg-lime-300 transition-all shadow-lg text-base">
+                    Shop Now →
+                  </button>
+                  <a href="https://wa.me/923098773221" target="_blank" rel="noreferrer"
+                    className="flex items-center gap-2 border-2 border-lime-400 text-lime-400 font-bold px-8 py-4 rounded-xl hover:bg-lime-400 hover:text-green-900 transition-all text-base">
+                    <MessageCircle size={20}/> WhatsApp Us
+                  </a>
+                </div>
+                <div className="flex flex-wrap gap-6 mt-10">
+                  {[["200+","Projects Done"],["950+","Happy Clients"],["5★","ISO Certified"],["10+","Product Lines"]].map(([n,l])=>(
+                    <div key={l}>
+                      <div className="text-lime-400 font-black text-2xl">{n}</div>
+                      <div className="text-green-300 text-xs">{l}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Certifications */}
+          <div className="bg-gray-900 py-8 border-y border-gray-800">
+            <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-center gap-8 items-center">
+              {[
+                {icon:<Shield size={24} className="text-lime-400"/>, label:"ISO 9001:2015"},
+                {icon:<Award size={24} className="text-lime-400"/>, label:"SECP Registered"},
+                {icon:<Check size={24} className="text-lime-400"/>, label:"FBR Registered"},
+                {icon:<Star size={24} className="text-lime-400"/>, label:"QRO Certified"},
+                {icon:<Zap size={24} className="text-lime-400"/>, label:"IPO Trademark"},
+              ].map(c=>(
+                <div key={c.label} className="flex items-center gap-2 text-gray-300">
+                  {c.icon}<span className="text-sm font-semibold">{c.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Categories */}
+          <div className="max-w-7xl mx-auto px-4 py-16">
+            <h2 className="text-3xl font-black text-center mb-2">Our <span className="text-lime-400">Product Categories</span></h2>
+            <p className="text-gray-400 text-center mb-10">Complete solar energy solutions under one roof</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {CATS.filter(c=>c.id!=="all").map(c=>(
+                <button key={c.id} onClick={()=>{setCatFilter(c.id);go("products");}}
+                  className="bg-gray-900 border border-gray-800 hover:border-lime-500 rounded-2xl p-6 text-center transition-all group">
+                  <div className="text-4xl mb-3">{c.icon}</div>
+                  <div className="text-white font-bold text-sm group-hover:text-lime-400 transition-colors">{c.label}</div>
+                  <div className="text-gray-500 text-xs mt-1">{PRODUCTS.filter(p=>p.cat===c.id).length} products</div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Featured Products */}
+          <div className="bg-gray-900 py-16">
+            <div className="max-w-7xl mx-auto px-4">
+              <h2 className="text-3xl font-black text-center mb-2">🔥 <span className="text-lime-400">Hot Products</span></h2>
+              <p className="text-gray-400 text-center mb-10">Our most popular solar solutions</p>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {PRODUCTS.filter(p=>p.hot).map(p=>(
+                  <ProductCard key={p.id} p={p} onView={setViewProd} onAdd={addToCart}/>
+                ))}
+              </div>
+              <div className="text-center mt-8">
+                <button onClick={()=>go("products")}
+                  className="bg-lime-400 text-green-900 font-bold px-8 py-3 rounded-xl hover:bg-lime-300 transition-all">
+                  View All Products →
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Why Choose Us */}
+          <div className="max-w-7xl mx-auto px-4 py-16">
+            <h2 className="text-3xl font-black text-center mb-10">Why Choose <span className="text-lime-400">EcoNova?</span></h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {icon:"🏆",title:"ISO 9001:2015 Certified",desc:"Quality Management System certified by QRO – ensuring the highest standards in every product and service."},
+                {icon:"🔒",title:"Official Warranties",desc:"Up to 5-year official warranties on our premium products – your investment is fully protected."},
+                {icon:"⚡",title:"Complete Solutions",desc:"From panels to batteries, inverters to cables – we supply, install, and maintain your entire solar system."},
+                {icon:"🌍",title:"SECP & FBR Registered",desc:"Fully registered and compliant company giving you peace of mind with every purchase."},
+                {icon:"💰",title:"Competitive Pricing",desc:"Best prices in Pakistan without compromising on quality. Multiple grades and sizes for every budget."},
+                {icon:"📞",title:"Expert Support",desc:"Dedicated WhatsApp support line. Our technical team guides you from selection to installation."},
+              ].map(f=>(
+                <div key={f.title} className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
+                  <div className="text-4xl mb-3">{f.icon}</div>
+                  <h3 className="text-white font-bold mb-2">{f.title}</h3>
+                  <p className="text-gray-400 text-sm">{f.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA Banner */}
+          <div className="bg-gradient-to-r from-green-800 to-lime-700">
+            <div className="max-w-7xl mx-auto px-4 py-12 text-center">
+              <h2 className="text-3xl font-black text-white mb-4">Ready to Go Solar?</h2>
+              <p className="text-green-100 mb-6">Contact us on WhatsApp for free consultation and custom quotations.</p>
+              <a href="https://wa.me/923098773221" target="_blank" rel="noreferrer"
+                className="inline-flex items-center gap-2 bg-white text-green-900 font-black px-8 py-4 rounded-xl hover:bg-lime-100 transition-all text-base">
+                <MessageCircle size={20}/> Chat on WhatsApp: 0309-8773221
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── PRODUCTS PAGE ─────────────────────────────────────────────────────── */}
+      {page==="products" && (
+        <div className="max-w-7xl mx-auto px-4 py-10">
+          <h2 className="text-3xl font-black mb-2">Our <span className="text-lime-400">Products</span></h2>
+          <p className="text-gray-400 mb-6">ISO-certified solar energy products with official warranties</p>
+          {/* Search + Filter */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            <div className="relative flex-1">
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"/>
+              <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search products..."
+                className="w-full bg-gray-900 border border-gray-700 rounded-xl pl-9 pr-4 py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-lime-500"/>
+            </div>
+          </div>
+          {/* Category Tabs */}
+          <div className="flex flex-wrap gap-2 mb-8">
+            {CATS.map(c=>(
+              <button key={c.id} onClick={()=>setCatFilter(c.id)}
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${catFilter===c.id?"bg-lime-400 text-green-900":"bg-gray-800 text-gray-300 hover:bg-gray-700"}`}>
+                {c.icon} {c.label} {c.id!=="all"&&`(${PRODUCTS.filter(p=>p.cat===c.id).length})`}
+              </button>
+            ))}
+          </div>
+          {filtered.length===0 && (
+            <div className="text-center text-gray-500 py-20">
+              <Package size={48} className="mx-auto mb-4 text-gray-700"/>
+              <p>No products found. Try adjusting your search.</p>
+            </div>
+          )}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filtered.map(p=>(
+              <ProductCard key={p.id} p={p} onView={setViewProd} onAdd={addToCart}/>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── ABOUT PAGE ────────────────────────────────────────────────────────── */}
+      {page==="about" && (
+        <div className="max-w-4xl mx-auto px-4 py-16">
+          <div className="text-center mb-12">
+            <div className="text-5xl mb-4">☀️</div>
+            <h1 className="text-4xl font-black mb-2">About <span className="text-lime-400">EcoNova International</span></h1>
+            <p className="text-gray-400">Integrated Solar Solutions – Moving Towards a Greener Future</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <div className="bg-gray-900 rounded-2xl p-6 border border-gray-800">
+              <h2 className="text-lime-400 font-bold text-lg mb-3">Who We Are</h2>
+              <p className="text-gray-300 text-sm leading-relaxed">EcoNova International (SMC-Private) Limited is a fully registered Pakistani company based in Quetta, Balochistan. We are dedicated to providing sustainable energy solutions through design, supply, installation, commissioning, and maintenance of solar energy systems.</p>
+            </div>
+            <div className="bg-gray-900 rounded-2xl p-6 border border-gray-800">
+              <h2 className="text-lime-400 font-bold text-lg mb-3">Our Mission</h2>
+              <p className="text-gray-300 text-sm leading-relaxed">To accelerate Pakistan's transition to clean, renewable energy by making high-quality solar products accessible, affordable, and reliable for homes, businesses, and industries across the country.</p>
+            </div>
+          </div>
+          {/* Certifications */}
+          <div className="bg-gray-900 rounded-2xl p-6 border border-gray-800 mb-8">
+            <h2 className="text-white font-bold text-xl mb-4">Certifications &amp; Registrations</h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {[
+                {t:"ISO 9001:2015",d:"Quality Management System – Certificate No. 305026021082Q (Valid until February 2029)"},
+                {t:"SECP Registered",d:"Incorporated under the Companies Act, 2017 – Securities and Exchange Commission of Pakistan"},
+                {t:"FBR Registered",d:"Federal Board of Revenue – Active taxpayer status (Registration No. E203980)"},
+                {t:"IPO Trademark",d:"EcoNova logo registered under the Intellectual Property Organisation of Pakistan"},
+              ].map(c=>(
+                <div key={c.t} className="flex gap-3">
+                  <div className="w-8 h-8 bg-lime-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check size={14} className="text-green-900"/>
+                  </div>
+                  <div>
+                    <div className="text-white font-semibold text-sm">{c.t}</div>
+                    <div className="text-gray-400 text-xs mt-0.5">{c.d}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Services */}
+          <div className="bg-gray-900 rounded-2xl p-6 border border-gray-800">
+            <h2 className="text-white font-bold text-xl mb-4">Our Services</h2>
+            <div className="grid sm:grid-cols-3 gap-4">
+              {[
+                {e:"🔧",t:"Maintenance",d:"Professional solar system maintenance ensuring efficiency and longevity"},
+                {e:"⚙️",t:"Installation",d:"Expert solar panel installation with precise planning and reliable service"},
+                {e:"📋",t:"Consultation",d:"Free energy efficiency consultation to assess your needs and guide installation"},
+              ].map(s=>(
+                <div key={s.t} className="text-center">
+                  <div className="text-3xl mb-2">{s.e}</div>
+                  <div className="text-lime-400 font-bold text-sm mb-1">{s.t}</div>
+                  <div className="text-gray-400 text-xs">{s.d}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── CONTACT PAGE ─────────────────────────────────────────────────────── */}
+      {page==="contact" && (
+        <div className="max-w-4xl mx-auto px-4 py-16">
+          <h1 className="text-4xl font-black text-center mb-2">Contact <span className="text-lime-400">Us</span></h1>
+          <p className="text-gray-400 text-center mb-12">Get in touch for quotes, consultations, or support</p>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              {[
+                {icon:<MessageCircle size={22} className="text-lime-400"/>, t:"WhatsApp / Call", v:"0309-8773221", link:"https://wa.me/923098773221"},
+                {icon:<MapPin size={22} className="text-lime-400"/>, t:"Address", v:"Shop No.56, Ground Floor, Civic Centre, Suraj Ganj Bazaar, Gawalmandi, Quetta, Balochistan 87300, Pakistan"},
+                {icon:<Phone size={22} className="text-lime-400"/>, t:"Phone", v:"0309-8773221", link:"tel:+923098773221"},
+              ].map(c=>(
+                <div key={c.t} className="bg-gray-900 border border-gray-800 rounded-2xl p-5 flex gap-4">
+                  <div className="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center flex-shrink-0">{c.icon}</div>
+                  <div>
+                    <div className="text-gray-400 text-xs mb-1">{c.t}</div>
+                    {c.link ? <a href={c.link} target="_blank" rel="noreferrer" className="text-white font-semibold text-sm hover:text-lime-400">{c.v}</a>
+                      : <div className="text-white font-semibold text-sm">{c.v}</div>}
+                  </div>
+                </div>
+              ))}
+              <div className="bg-gray-900 border border-gray-800 rounded-2xl p-5">
+                <div className="text-lime-400 font-bold mb-3">Payment Methods</div>
+                <div className="space-y-2">
+                  <div className="text-gray-300 text-sm"><span className="text-white font-semibold">UBL Bank:</span> Atta Ullah – 0476257299439</div>
+                  <div className="text-gray-300 text-sm"><span className="text-white font-semibold">EasyPaisa:</span> Attaullah – 0309-8773221</div>
+                </div>
+              </div>
+            </div>
+            <ContactForm/>
+          </div>
+        </div>
+      )}
+
+      {/* ── FOOTER ───────────────────────────────────────────────────────────── */}
+      <footer className="bg-green-950 border-t border-green-900 mt-16">
+        <div className="max-w-7xl mx-auto px-4 py-12">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <div>
+              <Logo/>
+              <p className="text-green-300 text-xs mt-4 leading-relaxed">Pakistan's trusted source for premium solar energy products and complete renewable energy solutions.</p>
+              <div className="flex gap-3 mt-4">
+                {["ISO","SECP","FBR","IPO"].map(b=>(
+                  <span key={b} className="bg-green-800 text-lime-400 text-xs font-bold px-2 py-1 rounded">{b}</span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h4 className="text-white font-bold mb-3">Products</h4>
+              <div className="space-y-2">
+                {CATS.filter(c=>c.id!=="all").map(c=>(
+                  <button key={c.id} onClick={()=>{setCatFilter(c.id);go("products");}} className="block text-green-300 hover:text-lime-400 text-xs transition-colors">{c.icon} {c.label}</button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h4 className="text-white font-bold mb-3">Company</h4>
+              <div className="space-y-2">
+                {[["home","Home"],["about","About Us"],["products","Products"],["contact","Contact"]].map(([id,l])=>(
+                  <button key={id} onClick={()=>go(id)} className="block text-green-300 hover:text-lime-400 text-xs transition-colors">{l}</button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h4 className="text-white font-bold mb-3">Contact</h4>
+              <div className="space-y-2 text-xs text-green-300">
+                <p>📱 0309-8773221</p>
+                <p>📍 Quetta, Balochistan</p>
+                <p>🌐 ecovainternational.com</p>
+              </div>
+              <a href="https://wa.me/923098773221" target="_blank" rel="noreferrer"
+                className="mt-4 flex items-center gap-2 bg-green-500 text-white font-bold text-xs px-4 py-2 rounded-xl hover:bg-green-400 transition-all w-fit">
+                <MessageCircle size={14}/> WhatsApp Now
+              </a>
+            </div>
+          </div>
+          <div className="border-t border-green-900 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p className="text-green-500 text-xs">© 2025 EcoNova International (SMC-Private) Limited. All rights reserved.</p>
+            <p className="text-green-500 text-xs">ISO 9001:2015 Certified • SECP Registered • FBR Active</p>
+          </div>
+        </div>
+      </footer>
+
+      {/* ── OVERLAYS ─────────────────────────────────────────────────────────── */}
+      {viewProd && <ProductModal p={viewProd} onClose={()=>setViewProd(null)} onAdd={addToCart}/>}
+      {showCart && <CartDrawer cart={cart} onClose={()=>setShowCart(false)} onUpdate={updateCart} onCheckout={()=>{setShowCart(false);setShowCheckout(true);}}/>}
+      {showCheckout && <CheckoutModal cart={cart} onClose={()=>setShowCheckout(false)} onConfirm={()=>setCart([])}/>}
+      <WhatsAppBtn/>
+    </div>
+  );
+}
+
+// ── CONTACT FORM (sends via WhatsApp) ───────────────────────────────────────
+function ContactForm() {
+  const [f, setF] = useState({ name:"", phone:"", subject:"", message:"" });
+  const set = (k,v)=>setF(o=>({...o,[k]:v}));
+  const text = encodeURIComponent(
+    `Website Enquiry — EcoNova International\n\nName: ${f.name || "-"}\nPhone: ${f.phone || "-"}\nSubject: ${f.subject || "-"}\n\n${f.message || ""}`
+  );
+  return (
+    <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
+      <h3 className="text-white font-bold text-lg mb-4">Send a Message</h3>
+      <div className="space-y-3">
+        <input value={f.name} onChange={e=>set("name",e.target.value)} placeholder="Your Name" className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-lime-500"/>
+        <input value={f.phone} onChange={e=>set("phone",e.target.value)} placeholder="Phone Number" className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-lime-500"/>
+        <input value={f.subject} onChange={e=>set("subject",e.target.value)} placeholder="Subject" className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-lime-500"/>
+        <textarea value={f.message} onChange={e=>set("message",e.target.value)} placeholder="Your message..." rows={4} className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-lime-500 resize-none"/>
+        <a href={`https://wa.me/923098773221?text=${text}`} target="_blank" rel="noreferrer"
+          className="w-full bg-lime-400 text-green-900 font-black py-3 rounded-xl hover:bg-lime-300 transition-all flex items-center justify-center gap-2">
+          <MessageCircle size={18}/> Send via WhatsApp
+        </a>
+      </div>
+    </div>
+  );
+}
+
+const bootEl = document.getElementById("boot");
+if (bootEl) bootEl.remove();
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
